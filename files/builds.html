@@ -23,7 +23,7 @@
       pointer-events: none;
     }
 
-    /* Filters */
+    /* ── Filter Bar ── */
     .filter-bar {
       display: flex;
       gap: 0.75rem;
@@ -51,22 +51,150 @@
       background: var(--gold-glow);
     }
 
-    /* Builds grid */
+    /* ── Builds Grid ── */
     #builds-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 1.75rem;
     }
 
-    /* PC detail modal extra */
+    /* ── Image Gallery ── */
+    .pc-gallery {
+      position: relative;
+      width: 100%;
+      height: 240px;
+      overflow: hidden;
+      background: #0d0d14;
+      flex-shrink: 0;
+    }
+
+    .gallery-track {
+      display: flex;
+      height: 100%;
+      transition: transform 0.45s cubic-bezier(0.23, 1, 0.32, 1);
+      will-change: transform;
+    }
+
+    .gallery-slide {
+      min-width: 100%;
+      height: 100%;
+      flex-shrink: 0;
+    }
+
+    .gallery-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    .pc-card:hover .gallery-slide img {
+      transform: scale(1.04);
+    }
+
+    .gallery-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ── Arrow Buttons ── */
+    .gallery-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 10;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: rgba(10, 10, 12, 0.75);
+      border: 1px solid var(--border-gold);
+      color: var(--gold-pure);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.25s ease, background 0.2s ease, transform 0.2s ease;
+      backdrop-filter: blur(6px);
+    }
+    .gallery-arrow:hover {
+      background: rgba(212, 168, 67, 0.2);
+    }
+    .gallery-arrow.prev { left: 0.6rem; }
+    .gallery-arrow.next { right: 0.6rem; }
+
+    /* Show arrows only when hovering the card */
+    .pc-card:hover .gallery-arrow { opacity: 1; }
+
+    /* ── Dot Indicators ── */
+    .gallery-dots {
+      position: absolute;
+      bottom: 0.6rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 5px;
+      z-index: 10;
+    }
+    .gallery-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.3);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: none;
+      padding: 0;
+    }
+    .gallery-dot.active {
+      background: var(--gold-pure);
+      width: 16px;
+      border-radius: 3px;
+    }
+
+    /* ── Image Counter ── */
+    .gallery-counter {
+      position: absolute;
+      bottom: 0.6rem;
+      right: 0.7rem;
+      background: rgba(10,10,12,0.7);
+      border: 1px solid var(--border-gold);
+      color: var(--gold-pure);
+      font-family: var(--font-display);
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      padding: 0.2rem 0.5rem;
+      border-radius: 100px;
+      backdrop-filter: blur(6px);
+    }
+
+    /* ── Spec Table (modal) ── */
     .spec-table { width: 100%; border-collapse: collapse; margin: 1rem 0; }
     .spec-table tr { border-bottom: 1px solid var(--border-subtle); }
     .spec-table tr:last-child { border-bottom: none; }
     .spec-table td { padding: 0.6rem 0.5rem; font-size: 0.85rem; }
-    .spec-table td:first-child { color: var(--text-muted); width: 40%; font-family: var(--font-display); font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; }
+    .spec-table td:first-child {
+      color: var(--text-muted);
+      width: 40%;
+      font-family: var(--font-display);
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
     .spec-table td:last-child { color: var(--text-primary); }
 
-    /* Skeleton loader */
+    /* ── Modal Gallery (arrows always visible) ── */
+    .modal-gallery-wrap .gallery-arrow { opacity: 1; }
+    .modal-gallery-wrap .gallery-arrow:hover {
+      background: rgba(212,168,67,0.25);
+      transform: translateY(-50%) scale(1.1);
+    }
+
+    /* ── Skeleton ── */
     .skeleton {
       background: linear-gradient(90deg, var(--bg-card) 25%, var(--bg-card-hover) 50%, var(--bg-card) 75%);
       background-size: 200% 100%;
@@ -74,17 +202,17 @@
       border-radius: var(--radius-sm);
     }
     @keyframes skeleton {
-      0% { background-position: 200% 0; }
+      0%   { background-position: 200% 0; }
       100% { background-position: -200% 0; }
     }
     .skel-img { height: 240px; border-radius: var(--radius-md) var(--radius-md) 0 0; }
     .skel-text { height: 1rem; margin: 0.5rem 0; }
     .skel-text.sm { width: 60%; }
     .skel-text.lg { width: 80%; }
-    .skel-btn { height: 44px; border-radius: var(--radius-sm); margin-top: 1rem; }
+    .skel-btn  { height: 44px; border-radius: var(--radius-sm); margin-top: 1rem; }
 
     @media (max-width: 1024px) { #builds-grid { grid-template-columns: repeat(2, 1fr); } }
-    @media (max-width: 640px) { #builds-grid { grid-template-columns: 1fr; } }
+    @media (max-width: 640px)  { #builds-grid { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
@@ -106,7 +234,7 @@
     </div>
   </div>
 
-  <!-- Filter Bar -->
+  <!-- Filter + Grid -->
   <div class="container">
     <div class="filter-bar reveal">
       <button class="filter-chip active" data-filter="all">All Builds</button>
@@ -116,10 +244,7 @@
       <button class="filter-chip" data-filter="entry">Entry Luxury</button>
     </div>
 
-    <!-- Builds Grid -->
-    <div id="builds-grid">
-      <!-- Populated by JS from KV or defaults -->
-    </div>
+    <div id="builds-grid"></div>
 
     <div class="text-center mt-4 reveal" id="builds-footer-cta">
       <p class="text-secondary mb-2">Don't see exactly what you need?</p>
@@ -127,9 +252,9 @@
     </div>
   </div>
 
-  <!-- Modal for PC Detail -->
+  <!-- PC Detail Modal -->
   <div class="modal-overlay" id="pc-modal">
-    <div class="modal" style="max-width:600px;">
+    <div class="modal" style="max-width:620px;max-height:90vh;overflow-y:auto;">
       <div class="modal-header">
         <span class="modal-title" id="modal-pc-name">PC Details</span>
         <button class="cart-close" onclick="document.getElementById('pc-modal').classList.remove('open')" aria-label="Close">
@@ -142,14 +267,32 @@
     </div>
   </div>
 
-</div><!-- /page-wrapper -->
+</div>
 
 <div id="footer-slot"></div>
 
 <script src="partials.js"></script>
 <script src="main.js"></script>
 <script>
-// ── Default PC Data (overridden by KV if available) ──────────
+/* ================================================================
+   ✏️  PC CATALOG — EASY EDIT SECTION
+   ================================================================
+   HOW TO ADD A NEW BUILD:
+   1. Copy the template block at the bottom of this array
+   2. Fill in your details
+   3. Save the file — done!
+
+   HOW TO ADD IMAGES:
+   - Put your photos in the "assets/" folder
+   - Add paths to the "images" array
+   - The FIRST image is what shows on the card while browsing
+   - Extra images appear when clicking the ◀ ▶ arrows
+   - Only 1 image? No arrows shown — clean card view
+   - No images? A placeholder is shown automatically
+
+   CATEGORIES (pick one): workstation | gaming | creator | entry
+   ================================================================ */
+
 const DEFAULT_PCS = [
   {
     id: 'sovereign-x',
@@ -157,15 +300,20 @@ const DEFAULT_PCS = [
     price: 6499,
     category: 'workstation',
     badge: 'Flagship',
+    images: [
+      // 'assets/sovereign-x-main.jpg',    // ← MAIN image (shown on card)
+      // 'assets/sovereign-x-side.jpg',    // ← extra gallery images
+      // 'assets/sovereign-x-inside.jpg',
+    ],
     specs: {
-      CPU: 'Intel Core i9-14900KS',
-      GPU: 'NVIDIA RTX 4090 24GB',
-      RAM: '64GB DDR5-6400',
+      CPU:     'Intel Core i9-14900KS',
+      GPU:     'NVIDIA RTX 4090 24GB',
+      RAM:     '64GB DDR5-6400',
       Storage: '4TB NVMe Gen5 SSD',
       Cooling: '420mm Custom Loop',
-      Case: 'Lian Li O11 Dynamic EVO',
-      PSU: 'Seasonic PRIME TX-1600W',
-      OS: 'Windows 11 Pro'
+      Case:    'Lian Li O11 Dynamic EVO',
+      PSU:     'Seasonic PRIME TX-1600W',
+      OS:      'Windows 11 Pro',
     }
   },
   {
@@ -174,15 +322,19 @@ const DEFAULT_PCS = [
     price: 4299,
     category: 'gaming',
     badge: 'Best Seller',
+    images: [
+      // 'assets/apex-pro-main.jpg',
+      // 'assets/apex-pro-angle.jpg',
+    ],
     specs: {
-      CPU: 'AMD Ryzen 9 7950X3D',
-      GPU: 'NVIDIA RTX 4080 Super 16GB',
-      RAM: '32GB DDR5-5600',
+      CPU:     'AMD Ryzen 9 7950X3D',
+      GPU:     'NVIDIA RTX 4080 Super 16GB',
+      RAM:     '32GB DDR5-5600',
       Storage: '2TB NVMe Gen4 SSD',
       Cooling: '360mm AIO',
-      Case: 'Fractal Torrent RGB',
-      PSU: 'Corsair HX1200',
-      OS: 'Windows 11 Pro'
+      Case:    'Fractal Torrent RGB',
+      PSU:     'Corsair HX1200',
+      OS:      'Windows 11 Pro',
     }
   },
   {
@@ -190,16 +342,19 @@ const DEFAULT_PCS = [
     name: 'Elysian Origin',
     price: 2899,
     category: 'entry',
-    badge: null,
+    badge: '',
+    images: [
+      // 'assets/origin-main.jpg',
+    ],
     specs: {
-      CPU: 'Intel Core i7-14700K',
-      GPU: 'NVIDIA RTX 4070 Ti Super',
-      RAM: '32GB DDR5-5200',
+      CPU:     'Intel Core i7-14700K',
+      GPU:     'NVIDIA RTX 4070 Ti Super',
+      RAM:     '32GB DDR5-5200',
       Storage: '1TB NVMe Gen4 SSD',
       Cooling: '280mm AIO',
-      Case: 'NZXT H9 Flow',
-      PSU: 'be quiet! Straight Power 1000W',
-      OS: 'Windows 11 Home'
+      Case:    'NZXT H9 Flow',
+      PSU:     'be quiet! Straight Power 1000W',
+      OS:      'Windows 11 Home',
     }
   },
   {
@@ -208,15 +363,19 @@ const DEFAULT_PCS = [
     price: 5199,
     category: 'creator',
     badge: 'Creator Pick',
+    images: [
+      // 'assets/aurora-main.jpg',
+      // 'assets/aurora-cables.jpg',
+    ],
     specs: {
-      CPU: 'AMD Ryzen Threadripper PRO 7960X',
-      GPU: 'NVIDIA RTX 4090 24GB',
-      RAM: '128GB DDR5 ECC',
+      CPU:     'AMD Ryzen Threadripper PRO 7960X',
+      GPU:     'NVIDIA RTX 4090 24GB',
+      RAM:     '128GB DDR5 ECC',
       Storage: '8TB NVMe RAID Array',
       Cooling: 'Custom Hardline Loop',
-      Case: 'Enthoo 719 Full Tower',
-      PSU: 'Seasonic PRIME TX-2000W',
-      OS: 'Windows 11 Pro for Workstations'
+      Case:    'Enthoo 719 Full Tower',
+      PSU:     'Seasonic PRIME TX-2000W',
+      OS:      'Windows 11 Pro for Workstations',
     }
   },
   {
@@ -225,15 +384,20 @@ const DEFAULT_PCS = [
     price: 3499,
     category: 'gaming',
     badge: 'Gaming',
+    images: [
+      // 'assets/spectre-main.jpg',
+      // 'assets/spectre-rgb.jpg',
+      // 'assets/spectre-inside.jpg',
+    ],
     specs: {
-      CPU: 'Intel Core i9-14900K',
-      GPU: 'NVIDIA RTX 4080 Super 16GB',
-      RAM: '32GB DDR5-6000',
+      CPU:     'Intel Core i9-14900K',
+      GPU:     'NVIDIA RTX 4080 Super 16GB',
+      RAM:     '32GB DDR5-6000',
       Storage: '2TB NVMe Gen4 SSD',
       Cooling: '360mm AIO',
-      Case: 'Cooler Master HAF 700 EVO',
-      PSU: 'Corsair HX1000i',
-      OS: 'Windows 11 Home'
+      Case:    'Cooler Master HAF 700 EVO',
+      PSU:     'Corsair HX1000i',
+      OS:      'Windows 11 Home',
     }
   },
   {
@@ -242,54 +406,147 @@ const DEFAULT_PCS = [
     price: 2199,
     category: 'entry',
     badge: 'Compact',
+    images: [
+      // 'assets/phantom-main.jpg',
+      // 'assets/phantom-top.jpg',
+    ],
     specs: {
-      CPU: 'Intel Core i7-14700KF',
-      GPU: 'NVIDIA RTX 4070 Super',
-      RAM: '32GB DDR5-5600',
+      CPU:     'Intel Core i7-14700KF',
+      GPU:     'NVIDIA RTX 4070 Super',
+      RAM:     '32GB DDR5-5600',
       Storage: '1TB NVMe Gen4 SSD',
       Cooling: '240mm AIO',
-      Case: 'Lian Li Q58',
-      PSU: 'SFX-L 850W Gold',
-      OS: 'Windows 11 Home'
+      Case:    'Lian Li Q58',
+      PSU:     'SFX-L 850W Gold',
+      OS:      'Windows 11 Home',
     }
-  }
+  },
+
+  /* ── ✏️ ADD NEW BUILDS BELOW THIS LINE ─────────────────────
+  {
+    id: 'my-new-build',              // unique id, no spaces
+    name: 'Elysian My New Build',    // display name
+    price: 3999,                     // number only, no $
+    category: 'gaming',              // workstation | gaming | creator | entry
+    badge: 'New',                    // badge label, or '' for none
+    images: [
+      'assets/my-build-main.jpg',    // FIRST = main card photo
+      'assets/my-build-angle.jpg',   // additional gallery photos
+      'assets/my-build-inside.jpg',
+    ],
+    specs: {
+      CPU:     'Intel Core i9-14900K',
+      GPU:     'NVIDIA RTX 4080',
+      RAM:     '32GB DDR5',
+      Storage: '2TB NVMe SSD',
+      Cooling: '360mm AIO',
+      Case:    'Your Case Here',
+      PSU:     'Your PSU Here',
+      OS:      'Windows 11 Home',
+    }
+  },
+  ── END: ADD NEW BUILDS ABOVE THIS LINE ─────────────────── */
 ];
 
-// ── Build Card Renderer ──────────────────────────────────────
+/* ================================================================
+   GALLERY ENGINE — editing below this line is not necessary
+   ================================================================ */
+
+// Tracks current slide index per gallery instance
+const galleryState = {};
+
+function buildGalleryHTML(galleryId, images, height) {
+  const hasMany = images.length > 1;
+
+  const slides = images.length > 0
+    ? images.map(src => `
+        <div class="gallery-slide">
+          <img src="${src}" alt="" loading="lazy"
+               onerror="this.parentElement.innerHTML='<div class=gallery-placeholder>${svgPlaceholder()}</div>'">
+        </div>`).join('')
+    : `<div class="gallery-slide"><div class="gallery-placeholder">${svgPlaceholder()}</div></div>`;
+
+  const arrows = hasMany ? `
+    <button class="gallery-arrow prev" onclick="galleryPrev('${galleryId}',event)" aria-label="Previous">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+    <button class="gallery-arrow next" onclick="galleryNext('${galleryId}',event)" aria-label="Next">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+    </button>` : '';
+
+  const dots = hasMany
+    ? `<div class="gallery-dots" id="dots-${galleryId}">
+         ${images.map((_,i) =>
+           `<button class="gallery-dot ${i===0?'active':''}" onclick="galleryGoTo('${galleryId}',${i},event)" aria-label="Image ${i+1}"></button>`
+         ).join('')}
+       </div>` : '';
+
+  const counter = hasMany
+    ? `<div class="gallery-counter" id="counter-${galleryId}">1 / ${images.length}</div>` : '';
+
+  return `<div class="pc-gallery" style="height:${height}px;">
+    <div class="gallery-track" id="track-${galleryId}">${slides}</div>
+    ${arrows}${dots}${counter}
+  </div>`;
+}
+
+function svgPlaceholder() {
+  return `<svg width="72" height="72" viewBox="0 0 24 24" fill="none" stroke="rgba(212,168,67,0.15)" stroke-width="0.8">
+    <rect x="2" y="3" width="20" height="14" rx="2"/>
+    <line x1="8" y1="21" x2="16" y2="21"/>
+    <line x1="12" y1="17" x2="12" y2="21"/>
+  </svg>`;
+}
+
+function galleryGoTo(id, index, event) {
+  if (event) event.stopPropagation();
+  const s = galleryState[id];
+  if (!s || index < 0 || index >= s.images.length) return;
+  s.index = index;
+  const track = document.getElementById(`track-${id}`);
+  if (track) track.style.transform = `translateX(-${index * 100}%)`;
+  document.getElementById(`dots-${id}`)?.querySelectorAll('.gallery-dot')
+    .forEach((d, i) => d.classList.toggle('active', i === index));
+  const counter = document.getElementById(`counter-${id}`);
+  if (counter) counter.textContent = `${index + 1} / ${s.images.length}`;
+}
+
+function galleryNext(id, event) {
+  if (event) event.stopPropagation();
+  const s = galleryState[id];
+  if (s) galleryGoTo(id, (s.index + 1) % s.images.length, null);
+}
+
+function galleryPrev(id, event) {
+  if (event) event.stopPropagation();
+  const s = galleryState[id];
+  if (s) galleryGoTo(id, (s.index - 1 + s.images.length) % s.images.length, null);
+}
+
+/* ── Card Builder ── */
 function createPCCard(pc) {
+  const images = Array.isArray(pc.images) ? pc.images.filter(Boolean) : [];
+  galleryState[pc.id] = { index: 0, images };
+
   const card = document.createElement('div');
   card.className = 'card pc-card reveal';
   card.dataset.category = pc.category;
 
-  const gradients = {
-    'sovereign-x': 'linear-gradient(135deg,#1a1a24,#0d0d14)',
-    'apex-pro': 'linear-gradient(135deg,#141420,#0a0a10)',
-    'origin': 'linear-gradient(135deg,#12121c,#0c0c16)',
-    'aurora-creator': 'linear-gradient(135deg,#1c1818,#0f0a0a)',
-    'spectre-gaming': 'linear-gradient(135deg,#141824,#090d14)',
-    'phantom-mini': 'linear-gradient(135deg,#181420,#0c0a10)',
-  };
-
   const specsPreview = Object.entries(pc.specs).slice(0, 4);
 
   card.innerHTML = `
-    <div style="width:100%;height:240px;background:${gradients[pc.id]||'linear-gradient(135deg,#1a1a24,#0d0d14)'};display:flex;align-items:center;justify-content:center;overflow:hidden;">
-      <svg width="72" height="72" viewBox="0 0 24 24" fill="none" stroke="rgba(212,168,67,0.15)" stroke-width="0.8">
-        <rect x="2" y="3" width="20" height="14" rx="2"/>
-        <line x1="8" y1="21" x2="16" y2="21"/>
-        <line x1="12" y1="17" x2="12" y2="21"/>
-      </svg>
-    </div>
+    ${buildGalleryHTML(pc.id, images, 240)}
     ${pc.badge ? `<div class="pc-card-badge">${pc.badge}</div>` : ''}
     <div class="card-body">
       <div class="pc-card-title">${pc.name}</div>
       <div class="pc-card-price">$${pc.price.toLocaleString()}</div>
       <ul class="pc-card-specs">
-        ${specsPreview.map(([k,v]) => `<li>${v}</li>`).join('')}
+        ${specsPreview.map(([,v]) => `<li>${v}</li>`).join('')}
       </ul>
       <div style="display:flex;gap:0.6rem;">
         <button class="btn btn-outline btn-sm" onclick="openPCModal('${pc.id}')">Details</button>
-        <button class="btn btn-primary" style="flex:1" onclick="Cart.add({id:'${pc.id}',name:'${pc.name}',price:${pc.price}})">
+        <button class="btn btn-primary" style="flex:1"
+          onclick="Cart.add({id:'${pc.id}',name:'${pc.name}',price:${pc.price}})">
           Add to Cart
         </button>
       </div>
@@ -298,43 +555,48 @@ function createPCCard(pc) {
   return card;
 }
 
+/* ── Detail Modal ── */
 function openPCModal(id) {
   const pc = currentPCs.find(p => p.id === id);
   if (!pc) return;
+
+  const images = Array.isArray(pc.images) ? pc.images.filter(Boolean) : [];
+  const mid = `modal-${pc.id}`;
+  galleryState[mid] = { index: 0, images };
+
   document.getElementById('modal-pc-name').textContent = pc.name;
   document.getElementById('modal-pc-content').innerHTML = `
-    <div style="margin-bottom:1rem;">
+    <div class="modal-gallery-wrap">
+      ${buildGalleryHTML(mid, images, 280)}
+    </div>
+    <div style="margin-bottom:1rem;margin-top:0.25rem;">
       <span class="pc-card-price" style="font-size:1.8rem;">$${pc.price.toLocaleString()}</span>
     </div>
     <table class="spec-table">
-      ${Object.entries(pc.specs).map(([k,v]) => `
-        <tr><td>${k}</td><td>${v}</td></tr>
-      `).join('')}
+      ${Object.entries(pc.specs).map(([k,v]) => `<tr><td>${k}</td><td>${v}</td></tr>`).join('')}
     </table>
     <div style="display:flex;gap:0.75rem;margin-top:1.5rem;">
-      <button class="btn btn-primary btn-full btn-lg" onclick="Cart.add({id:'${pc.id}',name:'${pc.name}',price:${pc.price}});document.getElementById('pc-modal').classList.remove('open')">
+      <button class="btn btn-primary btn-full btn-lg"
+        onclick="Cart.add({id:'${pc.id}',name:'${pc.name}',price:${pc.price}});document.getElementById('pc-modal').classList.remove('open')">
         Add to Cart
       </button>
     </div>`;
+
   document.getElementById('pc-modal').classList.add('open');
 }
 
-// Close modal on overlay click
 document.getElementById('pc-modal')?.addEventListener('click', function(e) {
   if (e.target === this) this.classList.remove('open');
 });
 
+/* ── Render ── */
 let currentPCs = [];
 
 function renderBuilds(pcs, filter = 'all') {
   const grid = document.getElementById('builds-grid');
   grid.innerHTML = '';
   const filtered = filter === 'all' ? pcs : pcs.filter(p => p.category === filter);
-  filtered.forEach(pc => {
-    const card = createPCCard(pc);
-    grid.appendChild(card);
-  });
-  // Re-run scroll reveal on new elements
+  filtered.forEach(pc => grid.appendChild(createPCCard(pc)));
   const obs = new IntersectionObserver((entries) => {
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }});
   }, { threshold: 0.1 });
@@ -342,8 +604,7 @@ function renderBuilds(pcs, filter = 'all') {
 }
 
 function renderSkeletons() {
-  const grid = document.getElementById('builds-grid');
-  grid.innerHTML = Array(6).fill(0).map(() => `
+  document.getElementById('builds-grid').innerHTML = Array(6).fill(0).map(() => `
     <div class="card" style="overflow:hidden;">
       <div class="skeleton skel-img"></div>
       <div class="card-body">
@@ -358,7 +619,6 @@ function renderSkeletons() {
     </div>`).join('');
 }
 
-// Filter chips
 document.querySelectorAll('.filter-chip').forEach(chip => {
   chip.addEventListener('click', () => {
     document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
@@ -367,11 +627,18 @@ document.querySelectorAll('.filter-chip').forEach(chip => {
   });
 });
 
-// Load data
 async function loadBuilds() {
   renderSkeletons();
   const data = await fetchPCData();
-  currentPCs = (data && data.pcs && data.pcs.length) ? data.pcs : DEFAULT_PCS;
+  if (data && data.pcs && data.pcs.length) {
+    // KV data overrides names/prices — local file keeps images
+    currentPCs = data.pcs.map(kvPC => {
+      const local = DEFAULT_PCS.find(d => d.id === kvPC.id);
+      return { ...kvPC, images: local?.images || [] };
+    });
+  } else {
+    currentPCs = DEFAULT_PCS;
+  }
   renderBuilds(currentPCs);
 }
 
