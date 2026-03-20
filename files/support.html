@@ -327,7 +327,7 @@
               </div>
               <div>
                 <div class="contact-label">Email</div>
-                <div class="contact-value">d4yohero@gmail.com</div>
+                <div class="contact-value"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="0763337e686f62756847606a666e6b2964686a">[email&#160;protected]</a></div>
               </div>
             </div>
 
@@ -410,7 +410,7 @@
 
 <div id="footer-slot"></div>
 
-<script src="partials.js"></script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="partials.js"></script>
 <script src="main.js"></script>
 <script>
   // EmailJS Init
@@ -490,7 +490,7 @@
     };
 
     try {
-      await emailjs.send('default_service', 'template_5furaoz', params);
+      await emailjs.send('service_tl3ndnq', 'template_us6x8o2', params);
       document.getElementById('ticket-form-wrapper').style.display = 'none';
       document.getElementById('ticket-success').classList.add('visible');
       Toast.success('Ticket submitted successfully!');
@@ -502,9 +502,4 @@
       console.error('EmailJS error:', err);
     } finally {
       btn.disabled = false;
-      btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Submit Ticket';
-    }
-  }
-</script>
-</body>
-</html>
+      btn.innerHTML = '<svg width="16
