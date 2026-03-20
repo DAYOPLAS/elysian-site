@@ -10,8 +10,10 @@ function renderNav() {
     <div class="loader-bar"><div class="loader-bar-fill"></div></div>
   </div>
 
-  <!-- Particles -->
-  <canvas id="particles-canvas"></canvas>
+  <!-- Aurora Background -->
+  <div id="aurora-bg" aria-hidden="true">
+    <div id="aurora-layer"></div>
+  </div>
 
   <!-- Cart Overlay -->
   <div id="cart-overlay" class="cart-overlay"></div>
