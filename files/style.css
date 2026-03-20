@@ -322,77 +322,142 @@ a:hover { color: var(--gold-light); }
 }
 
 /* ============================================================
-   BUTTONS
+   BUTTONS — Neon Edition
+   Inspired by neon-button component (class-variance-authority)
+   Base: rounded-full, relative, overflow-hidden, neon sweep spans
    ============================================================ */
+
+/* ── Base ── */
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
   padding: 0.75rem 2rem;
-  border-radius: var(--radius-sm);
+  border-radius: 100px;              /* rounded-full */
   font-family: var(--font-display);
   font-size: 0.78rem;
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   cursor: pointer;
-  transition: all var(--transition);
-  border: none;
+  transition: all 0.25s cubic-bezier(0.23, 1, 0.32, 1);
+  border: 1px solid transparent;
   outline: none;
   position: relative;
-  overflow: hidden;
+  overflow: visible;                 /* allow neon glow to bleed */
+  text-decoration: none;
 }
 
+/* ── Neon sweep: top edge ── */
+.btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 12.5%;                       /* w-3/4 centered */
+  width: 75%;
+  height: 1px;
+  border-radius: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--btn-neon, rgba(212,168,67,0.9)),
+    transparent
+  );
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ── Neon sweep: bottom edge ── */
 .btn::after {
   content: '';
   position: absolute;
-  inset: 0;
-  background: rgba(255,255,255,0.06);
-  opacity: 0;
-  transition: opacity var(--transition);
+  bottom: -1px;
+  left: 12.5%;
+  width: 75%;
+  height: 1px;
+  border-radius: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--btn-neon, rgba(212,168,67,0.9)),
+    transparent
+  );
+  opacity: 0.3;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+  z-index: 1;
 }
-.btn:hover::after { opacity: 1; }
 
+.btn:hover::before { opacity: 1; }
+.btn:hover::after  { opacity: 0.5; }
+
+/* ── Primary — Gold solid ── */
 .btn-primary {
+  --btn-neon: rgba(255, 220, 120, 0.95);
   background: linear-gradient(135deg, var(--gold-dim), var(--gold-pure));
   color: var(--bg-primary);
+  border-color: transparent;
   box-shadow: 0 4px 20px rgba(212, 168, 67, 0.3);
 }
 .btn-primary:hover {
-  box-shadow: 0 8px 32px rgba(212, 168, 67, 0.5);
+  background: linear-gradient(135deg, var(--gold-pure), var(--gold-light));
+  box-shadow:
+    0 8px 32px rgba(212, 168, 67, 0.5),
+    0 0 60px rgba(212, 168, 67, 0.15);
   transform: translateY(-2px);
 }
 
+/* ── Outline — Gold ghost ── */
 .btn-outline {
-  background: transparent;
+  --btn-neon: rgba(212, 168, 67, 0.9);
+  background: rgba(212, 168, 67, 0.04);
   color: var(--gold-pure);
-  border: 1px solid var(--border-gold);
+  border-color: var(--border-gold);
 }
 .btn-outline:hover {
-  background: var(--gold-glow);
-  box-shadow: var(--shadow-gold);
+  background: rgba(212, 168, 67, 0.08);
+  border-color: var(--gold-pure);
+  box-shadow: 0 0 40px rgba(212, 168, 67, 0.12);
   transform: translateY(-2px);
 }
 
+/* ── Ghost — subtle ── */
 .btn-ghost {
+  --btn-neon: rgba(212, 168, 67, 0.6);
   background: transparent;
   color: var(--text-secondary);
-  border: 1px solid var(--border-subtle);
+  border-color: var(--border-subtle);
 }
 .btn-ghost:hover {
   border-color: var(--border-gold);
   color: var(--gold-pure);
+  background: var(--gold-glow);
 }
 
+/* ── Danger ── */
 .btn-danger {
+  --btn-neon: rgba(255, 100, 80, 0.9);
   background: var(--accent-red);
   color: #fff;
+  border-color: transparent;
+}
+.btn-danger:hover {
+  box-shadow: 0 0 30px rgba(192, 57, 43, 0.4);
 }
 
-.btn-lg { padding: 1rem 2.5rem; font-size: 0.85rem; }
-.btn-sm { padding: 0.5rem 1.25rem; font-size: 0.72rem; }
+/* ── Sizes ── */
+.btn-lg  { padding: 1rem 2.5rem;    font-size: 0.85rem; }
+.btn-sm  { padding: 0.5rem 1.25rem; font-size: 0.72rem; }
 .btn-full { width: 100%; }
+
+/* ── Disabled ── */
+.btn:disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
 
 /* ============================================================
    CARDS
